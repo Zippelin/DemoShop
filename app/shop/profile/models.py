@@ -21,6 +21,9 @@ class Company(models.Model):
 
     name = models.CharField(verbose_name='Наименование', max_length=255, unique=True)
 
+    def __str__(self):
+        return self.name
+
 
 class User(AbstractUser):
 
