@@ -6,6 +6,7 @@ C_NO_INPUT_FILE = 3
 C_UNKNOWN = 4
 C_NOT_PROVIDER = 5
 C_NOT_CUSTOMER = 6
+C_API_EXCEPTION = 7
 
 __error_messages = {
     C_WRONG_FILE: 'wrong file format',
@@ -14,6 +15,7 @@ __error_messages = {
     C_UNKNOWN: 'Unknown Errors',
     C_NOT_PROVIDER: 'You must be provider for that',
     C_NOT_CUSTOMER: 'You must be customer for that',
+    C_API_EXCEPTION: 'API fields error'
 }
 
 

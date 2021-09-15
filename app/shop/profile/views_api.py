@@ -54,7 +54,7 @@ def _create_record(loaded_data):
 
         for feature_name, feature_value in item['parameters'].items():
             feature, _ = Feature.objects.get_or_create(name=feature_name)
-            ProductFeature.objects.create(
+            ProductFeature.objects.get_or_create(
                 product=product,
                 feature=feature,
                 value=feature_value

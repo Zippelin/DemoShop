@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+
+#from assortment.views_api import AssortmentAPIView
 from product.views_api import ProductAPIView
 from profile.views_api import ImportProductsView
 
@@ -24,11 +26,13 @@ API_BASE_URL = 'api'
 
 router = routers.DefaultRouter()
 router.register('product', ProductAPIView)
+#router.register('assortment', AssortmentAPIView)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('rest_auth.urls')),
+    path('auth/registration/', include('rest_auth.registration.urls')),
     path('import_price/', ImportProductsView.as_view()),
     path('/'.join([API_BASE_URL, API_VERSION[1]]), include(router.urls)),
 ]

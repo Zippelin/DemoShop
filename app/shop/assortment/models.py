@@ -13,13 +13,13 @@ class Assortment(models.Model):
         Company,
         verbose_name='Продавец',
         on_delete=models.DO_NOTHING,
-        related_name='companies'
+        related_name='company_assortment'
     )
     product = models.ForeignKey(
         Product,
         verbose_name='Товар',
         on_delete=models.DO_NOTHING,
-        related_name='products'
+        related_name='product_assortment'
     )
     price = models.DecimalField(
         max_digits=9,
