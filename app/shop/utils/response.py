@@ -7,6 +7,10 @@ C_UNKNOWN = 4
 C_NOT_PROVIDER = 5
 C_NOT_CUSTOMER = 6
 C_API_EXCEPTION = 7
+C_PRICE_WRONG = 8
+C_QUANTITY_WRONG = 9
+C_USER_NOT_IN_COMPANY = 10
+
 
 __error_messages = {
     C_WRONG_FILE: 'wrong file format',
@@ -15,7 +19,10 @@ __error_messages = {
     C_UNKNOWN: 'Unknown Errors',
     C_NOT_PROVIDER: 'You must be provider for that',
     C_NOT_CUSTOMER: 'You must be customer for that',
-    C_API_EXCEPTION: 'API fields error'
+    C_API_EXCEPTION: 'API fields error',
+    C_PRICE_WRONG: 'Price should be positive and above zero',
+    C_QUANTITY_WRONG: 'Quantity should be positive and above zero',
+    C_USER_NOT_IN_COMPANY: 'User must be part of company',
 }
 
 

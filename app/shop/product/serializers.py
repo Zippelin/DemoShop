@@ -5,7 +5,7 @@ from rest_framework.serializers import ModelSerializer, CharField, IntegerField,
 
 from assortment.models import Assortment
 from assortment.serializers import AssortmentSerializer
-from utils.response import get_error_message, C_API_EXCEPTION
+from utils.response import get_error_message, C_API_EXCEPTION, C_PRICE_WRONG, C_QUANTITY_WRONG, C_USER_NOT_IN_COMPANY
 from .models import Product, ProductFeature, Feature, Category
 
 
@@ -21,7 +21,7 @@ class FeatureSerializer(ModelSerializer):
     class Meta:
         model = Feature
         fields = [
-            'name',
+            'id', 'name',
         ]
 
 
@@ -68,17 +68,17 @@ class ProductEntrySerializer(ProductCommonSerializer):
 
     def validate_price(self, value):
         if self.context.get('action') == 'create' and int(value) == 0:
-            raise ValidationError('Цена должна быть больше нуля')
+            raise ValidationError(get_error_message(C_PRICE_WRONG))
         return value
 
     def validate_quantity(self, value):
         if self.context.get('action') == 'create' and int(value) == 0:
-            raise ValidationError('Кол-во должно быть больше нуля')
+            raise ValidationError(get_error_message(C_QUANTITY_WRONG))
         return value
 
     def validate(self, attrs):
         if not self.context.get('request').user.company:
-            raise ValidationError('Пользователь должен состоять в организации')
+            raise ValidationError(get_error_message(C_USER_NOT_IN_COMPANY))
         return attrs
 
     def create(self, validated_data):
@@ -117,3 +117,50 @@ class ProductEntrySerializer(ProductCommonSerializer):
         )
 
         return product
+
+    def update(self, instance, validated_data):
+        user = self.context.get('request').user
+        print(validated_data)
+        print(instance)
+        instance.name = validated_data.get('name')
+        instance.category = validated_data.get('category')
+        instance.save()
+        features = validated_data.get('product_features')
+        assortments = validated_data.get('product_assortment')
+        assortments = assortments[0]
+        for item in features:
+            feature, _ = Feature.objects.get_or_create(name=item.get('feature').get('name'))
+            try:
+                product_feature = ProductFeature.objects.get(
+                    product=instance,
+                    feature=feature,
+                )
+                product_feature.value = item.get('value')
+                product_feature.save()
+            except ProductFeature.DoesNotExist:
+                product_feature = ProductFeature.objects.create(
+                    product=instance,
+                    feature=feature,
+                    value=item.get('value'),
+                )
+                product_feature.save()
+        try:
+            assortment = Assortment.objects.get(
+                company=user.company,
+                product=instance
+            )
+            assortment.quantity = assortments.get('quantity')
+            assortment.available = assortments.get('available')
+            assortment.description = assortments.get('description')
+            assortment.save()
+        except Assortment.DoesNotExist:
+            assortment = Assortment.objects.create(
+                company=user.company,
+                product=instance,
+                quantity=assortments.get('quantity'),
+                available=assortments.get('available'),
+                description=assortments.get('description'),
+            )
+            assortment.save()
+
+        return instance

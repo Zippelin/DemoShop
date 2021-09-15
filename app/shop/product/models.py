@@ -38,7 +38,7 @@ class Feature(models.Model):
 
 class ProductFeature(models.Model):
     class Meta:
-        unique_together = ['product', 'feature', 'value']
+        unique_together = ['product', 'feature']
 
     product = models.ForeignKey(
         Product,

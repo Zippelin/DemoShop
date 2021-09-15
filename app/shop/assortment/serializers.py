@@ -13,7 +13,3 @@ class AssortmentSerializer(ModelSerializer):
         fields = [
             'id', 'company', 'price', 'description', 'quantity', 'available'
         ]
-        extra_kwargs = {
-                'quantity': {'write_only': True},
-                'available': {'write_only': True}
-        }
