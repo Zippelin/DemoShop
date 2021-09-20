@@ -92,7 +92,8 @@ class OrderGenericSerializer(ModelSerializer):
         model = Order
         fields = [
             'id', 'date', 'status',
-            'recipient_email', 'recipient_first_name', 'recipient_last_name',
+            'recipient_email', 'recipient_first_name',
+            'recipient_last_name',
             'recipient_patronymic', 'recipient_phone',
             'profile',
             'city', 'street', 'house_number', 'housing',
@@ -107,7 +108,8 @@ class OrderListSerializer(OrderGenericSerializer):
         model = Order
         fields = [
             'id', 'date', 'status',
-            'recipient_email', 'recipient_first_name', 'recipient_last_name',
+            'recipient_email', 'recipient_first_name',
+            'recipient_last_name',
             'recipient_patronymic', 'recipient_phone',
             'profile',
             'city', 'street', 'house_number', 'housing',
@@ -133,7 +135,8 @@ class OrderPatchSerializer(OrderGenericSerializer):
 
     def update(self, instance, validated_data):
         instance = super(OrderPatchSerializer, self).update(instance, validated_data)
-        if validated_data['status'] == Order.Status.IN_PROGRESS and instance.status == Order.Status.NEW:
+        if validated_data['status'] == Order.Status.IN_PROGRESS \
+                and instance.status == Order.Status.NEW:
             for order_item in instance.order_items.all():
                 order_item.price = order_item.assortment.price
                 order_item.save()

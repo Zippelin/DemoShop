@@ -26,3 +26,8 @@ class OrderAPIView(ModelViewSet):
         if self.action in ['update', 'partial_update',]:
             self.serializer_class = OrderPatchSerializer
         return self.serializer_class
+
+    def get_queryset(self):
+        return Order.objects.filter(
+            profile=self.request.user,
+        ).all()
