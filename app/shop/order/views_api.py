@@ -1,12 +1,14 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from order.models import Order, OrderItem
-from order.serializers import OrderItemSerializer, OrderListSerializer, OrderPatchSerializer
+from order.serializers import OrderItemSerializer, OrderListSerializer, OrderPatchSerializer, OrderRetrieveSerializer
 
 
 class OrderItemAPI(ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get_queryset(self):
         return OrderItem.objects.filter(
@@ -21,10 +23,13 @@ class OrderItemAPI(ModelViewSet):
 class OrderAPIView(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderListSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get_serializer_class(self):
-        if self.action in ['update', 'partial_update',]:
+        if self.action in ['update', 'partial_update', ]:
             self.serializer_class = OrderPatchSerializer
+        elif self.action in ['retrieve', ]:
+            self.serializer_class = OrderRetrieveSerializer
         return self.serializer_class
 
     def get_queryset(self):

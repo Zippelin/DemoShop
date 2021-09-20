@@ -87,6 +87,7 @@ class OrderItemSerializer(ModelSerializer):
 
 
 class OrderGenericSerializer(ModelSerializer):
+    sum = SerializerMethodField()
 
     class Meta:
         model = Order
@@ -98,10 +99,32 @@ class OrderGenericSerializer(ModelSerializer):
             'profile',
             'city', 'street', 'house_number', 'housing',
             'structure', 'apartment', 'additional_info',
+            'sum'
         ]
+
+    def get_sum(self, obj):
+        total = 0
+        for item in obj.order_items.all():
+            total += item.quantity * item.price
+        return total
 
 
 class OrderListSerializer(OrderGenericSerializer):
+    items_count = SerializerMethodField()
+
+    class Meta:
+        model = Order
+        fields = [
+            'id', 'date', 'status',
+            'items_count', 'sum'
+        ]
+
+    def get_items_count(self, obj):
+        obj.order_items.count()
+        return obj.order_items.count()
+
+
+class OrderRetrieveSerializer(OrderGenericSerializer):
     order_items = OrderItemSerializer(many=True)
 
     class Meta:
@@ -114,11 +137,8 @@ class OrderListSerializer(OrderGenericSerializer):
             'profile',
             'city', 'street', 'house_number', 'housing',
             'structure', 'apartment', 'additional_info',
-            'order_items'
+            'order_items', 'sum'
         ]
-
-    def update(self, instance, validated_data):
-        return instance
 
 
 class OrderPatchSerializer(OrderGenericSerializer):
