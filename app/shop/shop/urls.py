@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-#from assortment.views_api import AssortmentAPIView
-from product.views_api import ProductAPIView
+from order.views_api import OrderItemAPI, OrderAPIView
+from product.views_api import ProductAPIView, FeatureAPIView
 from profile.views_api import ImportProductsView
 
 API_VERSION = [None, 'v1/']
@@ -26,7 +26,9 @@ API_BASE_URL = 'api'
 
 router = routers.DefaultRouter()
 router.register('product', ProductAPIView)
-#router.register('assortment', AssortmentAPIView)
+router.register('feature', FeatureAPIView)
+router.register('order-item', OrderItemAPI)
+router.register('order', OrderAPIView)
 
 
 urlpatterns = [

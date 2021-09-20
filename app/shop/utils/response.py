@@ -10,7 +10,8 @@ C_API_EXCEPTION = 7
 C_PRICE_WRONG = 8
 C_QUANTITY_WRONG = 9
 C_USER_NOT_IN_COMPANY = 10
-
+C_QUANTITY_THRESHOLD = 11
+C_WRONG_REQUEST = 12
 
 __error_messages = {
     C_WRONG_FILE: 'wrong file format',
@@ -23,6 +24,8 @@ __error_messages = {
     C_PRICE_WRONG: 'Price should be positive and above zero',
     C_QUANTITY_WRONG: 'Quantity should be positive and above zero',
     C_USER_NOT_IN_COMPANY: 'User must be part of company',
+    C_QUANTITY_THRESHOLD: 'Quantity should be equal or bellow target item',
+    C_WRONG_REQUEST: 'Wrong data in request',
 }
 
 

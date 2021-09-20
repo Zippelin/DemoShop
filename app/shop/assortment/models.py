@@ -30,3 +30,6 @@ class Assortment(models.Model):
     quantity = models.IntegerField(verbose_name='Кол-во', default=1)
     available = models.BooleanField(default=True, verbose_name='Доступе для продажи')
     description = models.TextField(max_length=20000, verbose_name='Описание', null=True, blank=True)
+
+    def __str__(self):
+        return self.product.name

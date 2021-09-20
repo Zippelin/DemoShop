@@ -13,3 +13,14 @@ class AssortmentSerializer(ModelSerializer):
         fields = [
             'id', 'company', 'price', 'description', 'quantity', 'available'
         ]
+
+
+class AssortmentShortSerializer(ModelSerializer):
+    id = IntegerField(read_only=False)
+    product = StringRelatedField()
+
+    class Meta:
+        model = Assortment
+        fields = [
+            'id', 'product'
+        ]

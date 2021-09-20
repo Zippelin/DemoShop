@@ -120,8 +120,6 @@ class ProductEntrySerializer(ProductCommonSerializer):
 
     def update(self, instance, validated_data):
         user = self.context.get('request').user
-        print(validated_data)
-        print(instance)
         instance.name = validated_data.get('name')
         instance.category = validated_data.get('category')
         instance.save()

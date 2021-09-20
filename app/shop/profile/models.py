@@ -77,10 +77,17 @@ class User(AbstractUser):
         super(User, self).save()
 
 
-class AddressAbstractModel(models.Model):
-    class Meta:
-        abstract = True
+class Address(models.Model):
 
+    class Meta:
+        verbose_name = 'Адрес'
+        verbose_name_plural = 'Адреса'
+
+    user = models.ForeignKey(
+        User,
+        verbose_name='Пользователь',
+        on_delete=models.CASCADE
+    )
     city = models.CharField(verbose_name='Город', max_length=255)
     street = models.CharField(verbose_name='Улица', max_length=255)
     house_number = models.IntegerField(verbose_name='Номер дома')
@@ -92,17 +99,4 @@ class AddressAbstractModel(models.Model):
         blank=True,
         null=True,
         max_length=1000
-    )
-
-
-class Address(AddressAbstractModel):
-
-    class Meta:
-        verbose_name = 'Адрес'
-        verbose_name_plural = 'Адреса'
-
-    user = models.ForeignKey(
-        User,
-        verbose_name='Пользователь',
-        on_delete=models.CASCADE
     )
