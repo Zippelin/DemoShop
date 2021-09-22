@@ -22,29 +22,87 @@ class Order(models.Model):
         max_length=20,
         default=Status.NEW
     )
-    recipient_email = models.EmailField(verbose_name='Электронная почта', max_length=255, null=True, blank=True)
-    recipient_first_name = models.CharField(verbose_name='Имя', max_length=255, null=True, blank=True)
-    recipient_last_name = models.CharField(verbose_name='Фамилия', max_length=255, null=True, blank=True)
-    recipient_patronymic = models.CharField(verbose_name='Отчество', max_length=255, null=True, blank=True)
-    recipient_phone = models.CharField(verbose_name='Телефон', max_length=50, null=True, blank=True)
+    recipient_email = models.EmailField(
+        verbose_name='Электронная почта',
+        max_length=255,
+        null=True, blank=True
+    )
+    recipient_first_name = models.CharField(
+        verbose_name='Имя',
+        max_length=255,
+        null=True, blank=True
+    )
+    recipient_last_name = models.CharField(
+        verbose_name='Фамилия',
+        max_length=255,
+        null=True, blank=True
+    )
+    recipient_patronymic = models.CharField(
+        verbose_name='Отчество',
+        max_length=255,
+        null=True, blank=True
+    )
+    recipient_phone = models.CharField(
+        verbose_name='Телефон',
+        max_length=50,
+        null=True, blank=True
+    )
     profile = models.ForeignKey(
         User,
         verbose_name='Заказавший',
         on_delete=models.DO_NOTHING,
         related_name='orders'
     )
-    city = models.CharField(verbose_name='Город', max_length=255, null=True, blank=True)
-    street = models.CharField(verbose_name='Улица', max_length=255, null=True, blank=True)
-    house_number = models.IntegerField(verbose_name='Номер дома', null=True, blank=True)
-    housing = models.IntegerField(verbose_name='Строение', blank=True, null=True)
-    structure = models.IntegerField(verbose_name='Корпус', blank=True, null=True)
-    apartment = models.CharField(verbose_name='Квартира или Офис', max_length=20, null=True, blank=True)
+    city = models.CharField(
+        verbose_name='Город',
+        max_length=255,
+        null=True, blank=True
+    )
+    street = models.CharField(
+        verbose_name='Улица',
+        max_length=255,
+        null=True, blank=True
+    )
+    house_number = models.IntegerField(
+        verbose_name='Номер дома',
+        null=True, blank=True
+    )
+    housing = models.IntegerField(
+        verbose_name='Строение',
+        blank=True, null=True
+    )
+    structure = models.IntegerField(
+        verbose_name='Корпус',
+        blank=True, null=True
+    )
+    apartment = models.CharField(
+        verbose_name='Квартира или Офис',
+        max_length=20,
+        null=True, blank=True
+    )
     additional_info = models.TextField(
         verbose_name='Дополнительная информация',
         blank=True,
         null=True,
         max_length=1000,
     )
+
+    def get_items_count(self):
+        return self.order_items.all().count()
+
+    get_items_count.short_description = 'Кол-во товаров'
+
+    def get_items_sum(self):
+        sum = 0
+        for item in self.order_items.all():
+            sum += item.price * item.quantity
+
+        return sum
+
+    get_items_sum.short_description = 'Сумма заказа'
+
+    def __str__(self):
+        return str(self.id)
 
 
 class OrderItem(models.Model):
@@ -68,3 +126,8 @@ class OrderItem(models.Model):
         null=True,
         blank=True
     )
+
+    def get_company(self):
+        return self.assortment.company
+
+    get_company.short_description = 'Компания'

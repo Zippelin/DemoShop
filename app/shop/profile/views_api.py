@@ -1,3 +1,5 @@
+import allauth
+from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .permissions import UserIsProviderOrAdmin
@@ -60,3 +62,9 @@ def _create_record(loaded_data):
                 value=feature_value
             )
     return loaded_data
+
+
+class ConfirmationSent(APIView):
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({})

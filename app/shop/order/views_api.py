@@ -36,3 +36,6 @@ class OrderAPIView(ModelViewSet):
         return Order.objects.filter(
             profile=self.request.user,
         ).all()
+
+    def get_serializer_context(self):
+        return {'request': self.request, 'action': self.action}

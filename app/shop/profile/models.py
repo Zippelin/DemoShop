@@ -39,8 +39,8 @@ class User(AbstractUser):
         verbose_name='Электронная почта',
         max_length=255,
         unique=True)
-    first_name = models.CharField(verbose_name='Имя', max_length=255)
-    last_name = models.CharField(verbose_name='Фамилия', max_length=255)
+    first_name = models.CharField(verbose_name='Имя', max_length=255, null=False, blank=False)
+    last_name = models.CharField(verbose_name='Фамилия', max_length=255, null=False, blank=False)
     patronymic = models.CharField(verbose_name='Отчество', max_length=255)
     phone = models.CharField(verbose_name='Телефон', max_length=50)
     position = models.ForeignKey(

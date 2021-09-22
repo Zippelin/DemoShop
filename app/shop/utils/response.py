@@ -45,3 +45,17 @@ def response(status=True, errors=None, data=None):
 
 def get_error_message(code=C_UNKNOWN):
     return __error_messages[code]
+
+
+def get_mail_text_on_order_creation(order_url, order_number, last_name, first_name):
+    return f'Уважаемый {last_name} {first_name} !!\n' \
+           f'Спасибо за Ваш заказ !!\n' \
+           f'Номер оформленного заказа: {order_number}\n' \
+           f'Проследить за выполнение заказа можно по ссылке:\n' \
+           f'{order_url}', f'Оформлен заказ {order_number}'
+
+
+def get_mail_text_on_sing_up(user_mail):
+    return f'Спасибо за регистрацию на сайте Дипломной работы Нетологии\n' \
+           f'Это письмо было автоматически сгенерировано на адрес {user_mail}\n', \
+           f'Регистрация на сайте Дипломной работы Нетологии завершена.'

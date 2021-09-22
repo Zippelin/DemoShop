@@ -13,13 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from allauth.account.views import confirm_email
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from rest_framework import routers
 
 from order.views_api import OrderItemAPI, OrderAPIView
 from product.views_api import ProductAPIView, FeatureAPIView
-from profile.views_api import ImportProductsView
+from profile.views_api import ImportProductsView, ConfirmationSent
 
 API_VERSION = [None, 'v1/']
 API_BASE_URL = 'api'
@@ -35,6 +37,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('rest_auth.urls')),
     path('auth/registration/', include('rest_auth.registration.urls')),
+    path('auth/registration/confirmation-send', ConfirmationSent.as_view(), name='account_email_verification_sent'),
     path('import_price/', ImportProductsView.as_view()),
     path('/'.join([API_BASE_URL, API_VERSION[1]]), include(router.urls)),
 ]
