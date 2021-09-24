@@ -9,6 +9,8 @@ services:
     build:
       context: ./celery
     command: celery -A tasks.tasks worker --loglevel=INFO -P eventlet
+    env_file:
+      - celery/.env
     depends_on:
       - redis
     expose:
