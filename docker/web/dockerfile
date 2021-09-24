@@ -1,5 +1,5 @@
 FROM python:3.8
-COPY ../../../app /app
+COPY ./app /app
 ENV DB_NAME=postgres
 ENV DB_LOGIN=postgres
 ENV DB_PASSWORD=postgres
@@ -11,4 +11,5 @@ ENV CELERY_BACKEND_ADDRESS=redis
 ENV CELERY_BACKEND_DB=2
 RUN pip install gunicorn
 RUN pip install -r /app/requirements.txt
-WORKDIR /app
+WORKDIR /app/shop
+

@@ -8,7 +8,7 @@ services:
   celery:
     build:
       context: ./celery
-    command: celery -A task worker --loglevel=INFO -P eventlet
+    command: celery -A tasks.tasks worker --loglevel=INFO -P eventlet
     depends_on:
       - redis
     expose:
@@ -25,11 +25,16 @@ services:
   web:
     build:
       context: ./web
-    command: gunicorn --bind 0.0.0.0:5000 run:app
+    command: gunicorn --bind 0.0.0.0:5000 shop.wsgi:application
     expose:
       - 5000
     depends_on:
-      - postgres
+      - migration
+  migration:
+    build:
+      context: ./web
+    command: python manage.py migrate
+    depends_on:
       - celery
       - redis
   nginx:

@@ -2,7 +2,8 @@ from django.contrib import admin
 from rest_framework.reverse import reverse_lazy
 
 from order.models import OrderItem, Order
-from signals import new_order_confirmation
+
+from utils.signals import new_order_confirmation
 
 
 class OrderItemInline(admin.TabularInline):
