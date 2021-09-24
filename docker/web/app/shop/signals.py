@@ -1,8 +1,9 @@
 import allauth
 from django.dispatch import receiver, Signal
 from utils.response import get_mail_text_on_order_creation, get_mail_text_on_sing_up
+
 try:
-    import app.celery.tasks as tasks
+    import tasks.tasks as tasks
 except ImportError:
     pass
 

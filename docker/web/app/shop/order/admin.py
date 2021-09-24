@@ -15,7 +15,6 @@ class OrderItemInline(admin.TabularInline):
         if obj.status == Order.Status.NEW:
             return ['assortment', 'price', 'get_company']
         return ['assortment', 'price', 'quantity', 'get_company']
-    
 
 
 @admin.register(Order)

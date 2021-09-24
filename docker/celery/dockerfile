@@ -1,0 +1,10 @@
+FROM python:3.8
+COPY ../../celery /celery
+ENV CELERY_BROKER_ADDRESS=redis
+ENV CELERY_BROKER_DB=1
+ENV CELERY_BACKEND_ADDRESS=redis
+ENV CELERY_BACKEND_DB=2
+RUN pip install celery
+RUN pip install eventlet
+RUN pip install redis
+WORKDIR /celery
