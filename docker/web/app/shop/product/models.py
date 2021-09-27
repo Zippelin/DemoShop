@@ -11,7 +11,7 @@ class Product(models.Model):
     features = models.ManyToManyField(
         'Feature',
         through='ProductFeature',
-        related_name='features'
+        related_name='features',
     )
     category = models.ForeignKey(
         'Category',

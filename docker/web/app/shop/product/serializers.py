@@ -46,19 +46,11 @@ class ProductListSerializer(ModelSerializer):
         ]
 
 
-class ProductCommonSerializer(ModelSerializer):
+class ProductEntrySerializer(ModelSerializer):
     id = IntegerField(required=False)
     features = ProductFeatureSerializer(many=True, source='product_features')
-
-    class Meta:
-        model = Product
-        fields = [
-            'id', 'name', 'features', 'assortment'
-        ]
-
-
-class ProductEntrySerializer(ProductCommonSerializer):
     assortment = AssortmentSerializer(many=True, source='product_assortment', read_only=False)
+    name = CharField(validators=[])
 
     class Meta:
         model = Product

@@ -12,13 +12,14 @@ class Assortment(models.Model):
     company = models.ForeignKey(
         Company,
         verbose_name='Продавец',
-        on_delete=models.DO_NOTHING,
-        related_name='company_assortment'
+        on_delete=models.SET_NULL,
+        related_name='company_assortment',
+        null=True
     )
     product = models.ForeignKey(
         Product,
         verbose_name='Товар',
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name='product_assortment'
     )
     price = models.DecimalField(

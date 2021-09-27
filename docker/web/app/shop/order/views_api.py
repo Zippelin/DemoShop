@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
@@ -34,7 +35,8 @@ class OrderAPIView(ModelViewSet):
 
     def get_queryset(self):
         return Order.objects.filter(
-            profile=self.request.user,
+            Q(profile=self.request.user) &
+            ~Q(status=Order.Status.NEW)
         ).all()
 
     def get_serializer_context(self):

@@ -15,7 +15,7 @@ from utils.response import C_QUANTITY_WRONG, get_error_message, C_QUANTITY_THRES
 
 
 class OrderItemSerializer(ModelSerializer):
-    id = IntegerField()
+    id = IntegerField(required=False)
     price = SerializerMethodField()
     assortment = AssortmentShortSerializer()
 
@@ -76,7 +76,7 @@ class OrderItemSerializer(ModelSerializer):
         order_item = OrderItem.objects.create(
             assortment=assortment,
             quantity=validated_data['quantity'],
-            price=assortment.product.price,
+            price=assortment.price,
             order=order
         )
         order_item.save()
