@@ -62,15 +62,15 @@
 
 ###### Продукты:
 
-#####1. Список
+##### 1. Список
 
 <code>/api/v1/product/</code>     <code>get</code>
 
-#####2. Детализация
+##### 2. Детализация
 
 <code>/api/v1/product/product_number</code>     <code>get</code>
 
-#####3. Создание
+##### 3. Создание
 
 <code>/api/v1/product/</code>     <code>post</code>
 
@@ -113,7 +113,7 @@
 При создании создает именно единиица ассортимента и продукт, если такого не было ранее. 
 Т.е. продукт привязанный к магазину продающему его. Можно не указывать <code>features</code>.
 
-#####4. Изменеие
+##### 4. Изменеие
 
 <code>/api/v1/product/product_number</code>     <code>patch</code>
 
@@ -157,7 +157,7 @@
         ]
     }
     
-#####4. Удаление
+##### 4. Удаление
 
 <code>/api/v1/product/product_number</code>     <code>delete</code>
 
@@ -167,21 +167,21 @@
     
 ###### Характеристики:
 
-#####1. Список
+##### 1. Список
 
 <code>/api/v1/feature</code>     <code>get</code>
 
     Header:
     Authorization: Token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     
-#####1. Детализация
+##### 1. Детализация
 
 <code>/api/v1/feature/feature_number</code>     <code>get</code>
 
     Header:
     Authorization: Token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     
-#####3. Добавление
+##### 3. Добавление
 
 <code>/api/v1/feature/</code>     <code>post</code>
 
@@ -194,7 +194,7 @@
         "name": "Втроенная память(Гб)"
     }
     
-#####4. Редактирование
+##### 4. Редактирование
 
 <code>/api/v1/feature/feature_number/</code>     <code>patch</code>
 
@@ -207,7 +207,7 @@
         "name": "Втроенная флэш память(Гб)"
     }
     
-#####5. Удаление
+##### 5. Удаление
 
 <code>/api/v1/feature/feature_number/</code>     <code>delete</code>
 
@@ -221,7 +221,7 @@
 
 Как только переходит в <code>IN_PROGRESS</code> происходит отправка письма о заказе.
 
-#####1. Список наименований в новом заказе
+##### 1. Список наименований в новом заказе
 
 <code>/api/v1/order-item</code>     <code>get</code>
 
@@ -230,7 +230,7 @@
     
 Отдает сипок того, что лежит в заказе со статусом <code>NEW</code> текущего пользователя.
     
-#####2. Добавление пункта в заказ
+##### 2. Добавление пункта в заказ
 Добавление происходит с корзину, т.е. в заказ в статусе <code>NEW</code>
 
 <code>/api/v1/order-item/</code>     <code>post</code>
@@ -247,7 +247,7 @@
         "quantity": 1
     }
     
-#####3. Изменение пункта заказа
+##### 3. Изменение пункта заказа
 Можно поменять только кол-во
 
 <code>/api/v1/order-item/order-item_number/</code>     <code>patch</code>
@@ -261,7 +261,7 @@
         "quantity": 10
     }
     
-#####4. Удаление
+##### 4. Удаление
 
 <code>/api/v1/order-item/order-item_number/</code>     <code>delete</code>
 
@@ -269,21 +269,21 @@
     Authorization: Token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     
     
-#####5. Список заказов
+##### 5. Список заказов
 
 <code>/api/v1/order/</code>     <code>get</code>
 
     Header:
     Authorization: Token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     
-#####6. детализация заказа
+##### 6. детализация заказа
 
 <code>/api/v1/order/order_number</code>     <code>get</code>
 
     Header:
     Authorization: Token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     
-#####6. Изменение заказа
+##### 7. Изменение заказа
 
 <code>/api/v1/order/order_number</code>     <code>patch</code>
 
