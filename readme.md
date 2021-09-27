@@ -294,7 +294,7 @@
     
         {
         "status": "IN_PROGRESS",
-        "recipient_email": "zerroCrop@inbox.ru",
+        "recipient_email": "admin@admin1.com",
         "recipient_first_name": "FF",
         "recipient_last_name": "fd",
         "recipient_patronymic": "fd",
