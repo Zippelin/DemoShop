@@ -23,4 +23,4 @@ jobs:
         run: cd /home/runner/work/Netology_FinalDiplom/Netology_FinalDiplom/docker/web/app/shop && flake8 .
 
       - name: Pytest check
-        run: pytest --cov=.
+        run: cd docker/web/app/shop && pytest --cov=.
