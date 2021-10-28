@@ -1,5 +1,3 @@
-from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import extend_schema_field, extend_schema_serializer
 from rest_framework.fields import IntegerField
 from rest_framework.relations import StringRelatedField
 from rest_framework.serializers import ModelSerializer

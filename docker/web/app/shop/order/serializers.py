@@ -1,17 +1,13 @@
-from abc import ABC
-
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 from rest_framework.exceptions import ValidationError
-from rest_framework.fields import SerializerMethodField, DecimalField, EmailField, CharField, IntegerField
-from rest_framework.relations import StringRelatedField, PrimaryKeyRelatedField
+from rest_framework.fields import SerializerMethodField, EmailField, CharField, IntegerField
 from rest_framework.reverse import reverse_lazy
-from rest_framework.serializers import ModelSerializer, Serializer
+from rest_framework.serializers import ModelSerializer
 
 from assortment.models import Assortment
 from assortment.serializers import AssortmentShortSerializer
 from order.models import OrderItem, Order
-from product.models import Product
 from signals import new_order_confirmation
 from utils.response import C_QUANTITY_WRONG, get_error_message, C_QUANTITY_THRESHOLD, C_WRONG_REQUEST
 

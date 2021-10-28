@@ -24,7 +24,7 @@ class OrderAdmin(admin.ModelAdmin):
         OrderItemInline
     ]
     list_display = ['id', 'status', 'date', 'get_items_count', 'get_items_sum']
-    
+
     def save_form(self, request, form, change):
         order = Order.objects.get(id=request.resolver_match.kwargs.get('object_id'))
         if order.status == Order.Status.NEW and request.POST.get('status') == Order.Status.IN_PROGRESS:

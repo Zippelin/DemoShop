@@ -16,4 +16,3 @@ class CompanyAdmin(admin.ModelAdmin):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     pass
-

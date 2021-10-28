@@ -1,12 +1,10 @@
 from django.db.models import Q
-from drf_spectacular.utils import extend_schema_view, extend_schema, extend_schema_serializer
+from drf_spectacular.utils import extend_schema_view, extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from order.models import Order, OrderItem
 from order.serializers import OrderItemSerializer, OrderListSerializer, OrderPatchSerializer, OrderRetrieveSerializer
-
-from utils.response import response, C_METHOD_NOT_ALLOWED
 
 
 @extend_schema_view(
@@ -40,17 +38,17 @@ class OrderItemAPI(ModelViewSet):
         description='Заказ авторизованного пользователя.',
         request=OrderRetrieveSerializer,
         responses=OrderRetrieveSerializer,
-                           ),
+    ),
     update=extend_schema(
         description='Перезапись заказа авторизованного пользователя.',
         request=OrderPatchSerializer,
         responses=OrderPatchSerializer,
-                         ),
+    ),
     partial_update=extend_schema(
         description='Обновление заказа авторизованного пользователя.',
         request=OrderPatchSerializer,
         responses=OrderPatchSerializer,
-                                 ),
+    ),
     destroy=extend_schema(description='Удаление заказа авторизованного пользователя.'),
     create=extend_schema(description='Создание заказа авторизованного пользователя.'),
 )
@@ -69,13 +67,11 @@ class OrderAPIView(ModelViewSet):
     def get_queryset(self):
         if self.action in ['update', 'partial_update', ]:
             return Order.objects.filter(
-                Q(profile=self.request.user) &
-                ~Q(status=Order.Status.DONE) & ~Q(status=Order.Status.CANCELED)
+                Q(profile=self.request.user) & ~Q(status=Order.Status.DONE) & ~Q(status=Order.Status.CANCELED)
             ).all()
         else:
             return Order.objects.filter(
-                Q(profile=self.request.user) &
-                ~Q(status=Order.Status.NEW)
+                Q(profile=self.request.user) & ~Q(status=Order.Status.NEW)
             ).all()
 
     def get_serializer_context(self):

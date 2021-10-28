@@ -40,4 +40,3 @@ def send_mail(to_address, header, text):
 
     server.quit()
     return True
-
