@@ -12,6 +12,7 @@ C_QUANTITY_WRONG = 9
 C_USER_NOT_IN_COMPANY = 10
 C_QUANTITY_THRESHOLD = 11
 C_WRONG_REQUEST = 12
+C_METHOD_NOT_ALLOWED = 13
 
 __error_messages = {
     C_WRONG_FILE: 'wrong file format',
@@ -26,6 +27,7 @@ __error_messages = {
     C_USER_NOT_IN_COMPANY: 'User must be part of company',
     C_QUANTITY_THRESHOLD: 'Quantity should be equal or bellow target item',
     C_WRONG_REQUEST: 'Wrong data in request',
+    C_METHOD_NOT_ALLOWED: 'Method not allowed here.'
 }
 
 

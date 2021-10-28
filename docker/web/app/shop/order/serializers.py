@@ -1,5 +1,7 @@
 from abc import ABC
 
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import SerializerMethodField, DecimalField, EmailField, CharField, IntegerField
 from rest_framework.relations import StringRelatedField, PrimaryKeyRelatedField
@@ -25,6 +27,7 @@ class OrderItemSerializer(ModelSerializer):
             'id', 'assortment', 'quantity', 'price'
         ]
 
+    @extend_schema_field(OpenApiTypes.DECIMAL)
     def get_price(self, obj):
         if obj.order.status == Order.Status.NEW:
             return obj.assortment.price
@@ -104,11 +107,20 @@ class OrderGenericSerializer(ModelSerializer):
             'sum'
         ]
 
+    @extend_schema_field(OpenApiTypes.DECIMAL)
     def get_sum(self, obj):
         total = 0
         for item in obj.order_items.all():
             total += item.quantity * item.price
         return total
+
+    def create(self, validated_data):
+        print(validated_data)
+        order = Order.objects.create(
+            profile=self.context.get('request').user,
+            **validated_data
+        )
+        return order
 
 
 class OrderListSerializer(OrderGenericSerializer):
@@ -121,6 +133,7 @@ class OrderListSerializer(OrderGenericSerializer):
             'items_count', 'sum'
         ]
 
+    @extend_schema_field(OpenApiTypes.INT)
     def get_items_count(self, obj):
         obj.order_items.count()
         return obj.order_items.count()
@@ -156,7 +169,7 @@ class OrderPatchSerializer(OrderGenericSerializer):
     recipient_phone = CharField(required=True)
 
     def update(self, instance, validated_data):
-        if validated_data['status'] == Order.Status.IN_PROGRESS \
+        if validated_data.get('status') == Order.Status.IN_PROGRESS \
                 and instance.status == Order.Status.NEW:
             for order_item in instance.order_items.all():
                 order_item.price = order_item.assortment.price

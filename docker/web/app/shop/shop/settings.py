@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -159,7 +161,17 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/second',
+        'user': '10/second',
+        'uploads': '1/second'
+    },
 }
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"
@@ -178,4 +190,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
-
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Diplom Shop',
+    'DESCRIPTION': 'Дипломная работа по созданию торговой плоащадки',
+    'VERSION': '1.0.0',
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+}

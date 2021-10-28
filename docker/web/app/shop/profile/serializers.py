@@ -1,4 +1,5 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.fields import CharField
+from rest_framework.serializers import ModelSerializer, Serializer
 
 from profile.models import Company
 
@@ -9,3 +10,8 @@ class CompanySerializer(ModelSerializer):
         fields = [
             'id', 'name'
         ]
+
+
+class ImportResponseSerializer(Serializer):
+    detail = CharField()
+    status = CharField()

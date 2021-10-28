@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework.exceptions import APIException
 from rest_framework.viewsets import ModelViewSet
 from .models import Product, Feature
@@ -11,6 +12,13 @@ from utils.response import get_error_message, C_API_EXCEPTION
 from utils.response import response
 
 
+@extend_schema_view(
+    list=extend_schema(description='Уникалный список продуктов'),
+    retrieve=extend_schema(description='Получение продукта.'),
+    update=extend_schema(description='Перезапись продукта.'),
+    partial_update=extend_schema(description='Обновление продукта.'),
+    destroy=extend_schema(description='Удаление продукта.'),
+)
 class ProductAPIView(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
@@ -38,6 +46,13 @@ class ProductAPIView(ModelViewSet):
             raise APIException(get_error_message(C_API_EXCEPTION))
 
 
+@extend_schema_view(
+    list=extend_schema(description='Уникалный список спецификаций'),
+    retrieve=extend_schema(description='Получение хар-ки.'),
+    update=extend_schema(description='Перезапись хар-ки.'),
+    partial_update=extend_schema(description='Обновление хар-ки.'),
+    destroy=extend_schema(description='Удаление хар-ки.'),
+)
 class FeatureAPIView(ModelViewSet):
     queryset = Feature.objects.all()
     serializer_class = FeatureSerializer

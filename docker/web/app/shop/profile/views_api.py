@@ -1,5 +1,7 @@
 import allauth
 from django.http import JsonResponse
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .permissions import UserIsProviderOrAdmin
@@ -9,10 +11,26 @@ from assortment.models import Assortment
 from utils.response import response, C_NO_INPUT_FILE, C_WRONG_FILE, C_WRONG_COMPANY_EMPLOYEE
 import yaml
 
+from .serializers import ImportResponseSerializer
+
 
 class ImportProductsView(APIView):
     permission_classes = [IsAuthenticated, UserIsProviderOrAdmin]
+    throttle_scope = 'uploads'
 
+    @extend_schema(
+        description='Загрузка прайса из файла',
+        parameters=[
+            OpenApiParameter(
+                name='files',
+                description='файл в yaml формате',
+                required=False,
+                type=OpenApiTypes.BINARY,
+            ),
+        ],
+        request=None,
+        responses=ImportResponseSerializer
+    )
     def post(self, request, *args, **kwargs):
         if request.data.get('files'):
             try:

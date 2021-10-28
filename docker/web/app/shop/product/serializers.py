@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from rest_framework.exceptions import APIException, ValidationError
 from rest_framework.relations import StringRelatedField
-from rest_framework.serializers import ModelSerializer, CharField, IntegerField, BooleanField, DecimalField
+from rest_framework.serializers import ModelSerializer, CharField, IntegerField
 
 from assortment.models import Assortment
 from assortment.serializers import AssortmentSerializer
