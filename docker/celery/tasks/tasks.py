@@ -17,16 +17,11 @@ celery_app = celery.Celery(
 @celery_app.task()
 def send_mail(to_address, header, text):
     server = SMTP(MAIL_SMTP_SERVER)
-    conn = server.connect(MAIL_SMTP_SERVER)
-    print(conn)
-    res = server.ehlo()
-    print(res)
-    res = server.starttls()
-    print(res)
-    res = server.ehlo()
-    print(res)
-    res = server.login(MAIL_SMTP_LOGIN, MAIL_SMTP_PASSWORD)
-    print(res)
+    _ = server.connect(MAIL_SMTP_SERVER)
+    _ = server.ehlo()
+    _ = server.starttls()
+    _ = server.ehlo()
+    _ = server.login(MAIL_SMTP_LOGIN, MAIL_SMTP_PASSWORD)
 
     msg = MIMEMultipart()
     msg['From'] = MAIL_SMTP_LOGIN
@@ -36,8 +31,7 @@ def send_mail(to_address, header, text):
     msg.attach(MIMEText(text, 'plain'))
     text = msg.as_string()
 
-    res = server.sendmail(MAIL_SMTP_LOGIN, MAIL_SMTP_LOGIN, text)
-    print(res)
+    _ = server.sendmail(MAIL_SMTP_LOGIN, MAIL_SMTP_LOGIN, text)
 
     server.quit()
     return True
