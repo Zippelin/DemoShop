@@ -18,8 +18,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r docker/web/app/requirements-dev.txt
+
       - name: Check Lint with flake8
         run: cd /home/runner/work/Netology_FinalDiplom/Netology_FinalDiplom/docker/web/app/shop && flake8 .
 
       - name: Pytest check
-        run: cd /home/runner/work/Netology_FinalDiplom/Netology_FinalDiplom/docker/web/app/shop && pytest --cov=.
+        run: pytest --cov=.
