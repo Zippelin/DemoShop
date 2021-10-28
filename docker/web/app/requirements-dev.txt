@@ -3,3 +3,4 @@ pytest
 pytest-django
 model_bakery
 flake8
+pytest-cov
