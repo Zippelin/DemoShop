@@ -17,15 +17,10 @@ celery_app = celery.Celery(
 def send_mail(to_address, header, text):
     server = SMTP(MAIL_SMTP_SERVER)
     conn = server.connect(MAIL_SMTP_SERVER)
-    print(conn)
     res = server.ehlo()
-    print(res)
     res = server.starttls()
-    print(res)
     res = server.ehlo()
-    print(res)
     res = server.login(MAIL_SMTP_LOGIN, MAIL_SMTP_PASSWORD)
-    print(res)
 
     msg = MIMEMultipart()
     msg['From'] = MAIL_SMTP_LOGIN
