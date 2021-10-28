@@ -38,6 +38,6 @@ jobs:
         run: flake8 .
 
       - name: Pytest check
-        run: cd shop &&  pytest --cov=. && cd ..
+        run: cd docker/web/app &&  pytest --cov=.
         env:
           hostip: localhost
